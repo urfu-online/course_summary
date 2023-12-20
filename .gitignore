@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+=======
+*.py[cod]
+__pycache__
+.pytest_cache
+>>>>>>> bc5b4b1 (init)
 
 # C extensions
 *.so
 
+<<<<<<< HEAD
 # Distribution / packaging
 .Python
 build/
@@ -158,3 +165,63 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+=======
+# Packages
+*.egg
+*.egg-info
+/dist
+/build
+/eggs
+/parts
+/bin
+/var
+/sdist
+/develop-eggs
+/.installed.cfg
+/lib
+/lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.cache/
+.pytest_cache/
+.coverage
+.coverage.*
+.tox
+coverage.xml
+htmlcov/
+
+# Virtual environments
+/venv/
+/venv-*/
+/.venv/
+/.venv-*/
+
+# The Silver Searcher
+.agignore
+
+# OS X artifacts
+*.DS_Store
+
+# Logging
+log/
+logs/
+chromedriver.log
+ghostdriver.log
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+docs/_build
+docs/modules.rst
+docs/course_summary.rst
+docs/course_summary.*.rst
+
+# Private requirements
+requirements/private.in
+requirements/private.txt
+>>>>>>> bc5b4b1 (init)
