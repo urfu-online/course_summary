@@ -24,8 +24,5 @@
     <ol>
         {% for section in sections.values %}<li>{{ section }}</li>{% endfor %}
     </ol>
-
-    {% for course in course_blocks.values %}
-    
-    {% endfor%}
+    {% for course in course_blocks.values %}<p>{{ course }}</p>{% endfor %}
 {% endblock body %}

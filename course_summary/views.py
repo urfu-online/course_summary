@@ -1,32 +1,31 @@
-from django.views.decorators.csrf import ensure_csrf_cookie
-from common.djangoapps.util.views import ensure_valid_course_key
-from opaque_keys.edx.keys import CourseKey
-from lms.djangoapps.courseware.courses import get_course_with_access
-from lms.djangoapps.courseware.access import has_access
-from django.shortcuts import render
-from xmodule.modulestore.django import modulestore
-from openedx.core.djangoapps.models.course_details import CourseDetails
-from cms.djangoapps.coursegraph.tasks import serialize_item, coerce_types
+from datetime import timezone
+
+import attr
+from cms.djangoapps.contentstore.outlines import _make_section_data
 
 from cms.djangoapps.contentstore.rest_api.v1.serializers import (
     CourseDetailsSerializer,
-    CourseGradingSerializer,
     CourseGradingModelSerializer,
+    CourseGradingSerializer,
 )
 from cms.djangoapps.contentstore.utils import get_course_grading
+from cms.djangoapps.coursegraph.tasks import coerce_types, serialize_item
 from cms.djangoapps.models.settings.course_grading import CourseGradingModel
-import attr
-from .utils import get_course_outline_data, get_course_outline_data_dict
+from common.djangoapps.util.views import ensure_valid_course_key
 from django.conf import settings
-from datetime import timezone
-from xmodule.modulestore import ModuleStoreEnum
-from cms.djangoapps.contentstore.outlines import _make_section_data
+
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+from docx import Document
 from lms.djangoapps.course_blocks.api import get_course_blocks
+from lms.djangoapps.courseware.access import has_access
+from lms.djangoapps.courseware.courses import get_course_with_access
+from opaque_keys.edx.keys import CourseKey
 from openedx.core.djangoapps.content.block_structure.api import (
     get_block_structure_manager,
 )
-
-from docx import Document
 
 from openedx.core.djangoapps.content.learning_sequences.data import (
     ContentErrorData,
@@ -37,9 +36,12 @@ from openedx.core.djangoapps.content.learning_sequences.data import (
     ExamData,
     VisibilityData,
 )
+from openedx.core.djangoapps.models.course_details import CourseDetails
 from openedx.features.course_experience.utils import get_course_outline_block_tree
+from xmodule.modulestore import ModuleStoreEnum
+from xmodule.modulestore.django import modulestore
 
-from django.http import HttpResponse, HttpResponseForbidden
+from .utils import get_course_outline_data, get_course_outline_data_dict
 
 
 @ensure_csrf_cookie
