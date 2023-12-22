@@ -26,6 +26,7 @@ from openedx.core.djangoapps.content.block_structure.api import (
     get_block_structure_manager,
 )
 
+from docx import Document
 
 from openedx.core.djangoapps.content.learning_sequences.data import (
     ContentErrorData,
@@ -37,6 +38,8 @@ from openedx.core.djangoapps.content.learning_sequences.data import (
     VisibilityData,
 )
 from openedx.features.course_experience.utils import get_course_outline_block_tree
+
+from django.http import HttpResponse, HttpResponseForbidden
 
 
 @ensure_csrf_cookie
@@ -102,7 +105,7 @@ def summary(request, course_id):
 
 @ensure_csrf_cookie
 @ensure_valid_course_key
-def summary1(request, course_id):
+def summary_docx(request, course_id):
     """
     Display the course's summary, or 404 if there is no such course.
     Assumes the course_id is in a valid format.
@@ -111,25 +114,25 @@ def summary1(request, course_id):
     course_key = CourseKey.from_string(course_id)
 
     course = get_course_with_access(request.user, "load", course_key)
-    staff_access = bool(has_access(request.user, "staff", course))
-    outline_data = get_course_outline_data(course_id)
-    items = modulestore().get_items(course_id)
-    for item in items:
-        fields, block_type = serialize_item(item)
+    if not bool(has_access(request.user, "staff", course)):
+        return HttpResponseForbidden()
 
-        for field_name, value in fields.items():
-            fields[field_name] = coerce_types(value)
+    store = modulestore()
+    course_outline_data = get_course_outline_data(course_id)
 
-    return render(
-        request,
-        "course_summary/base.html",
-        {
-            "course_outline_data": outline_data,
-            "course_outline_data_dict": get_course_outline_data_dict(
-                course_id
-            ),  # attr.asdict(course_outline_data),
-            "course": course,
-            "course_dict": course.__dict__,
-            "staff_access": staff_access,
-        },
+    with store.branch_setting(ModuleStoreEnum.Branch.published_only):
+        course_blocks = get_course_outline_block_tree(request, course_id, None)
+
+    document = Document()
+    document.add_heading(course_outline_data.title, 0)
+    document.add_paragraph(str(course_blocks))
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
+    response[
+        "Content-Disposition"
+    ] = f"attachment; filename={course_outline_data.title}__summary.docx"
+    document.save(response)
+
+    return response
