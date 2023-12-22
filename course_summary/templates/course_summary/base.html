@@ -8,4 +8,15 @@
 
 <code><pre>{{course_outline_data_dict}}</pre></code>
 
+{% for grader in  course_grading.graders %}
+    {% for key, value in grader.items %}
+        <p><strong>{{ key }}:</strong>{{ value }}</p>
+    {% endfor %}
+    <hr>
+{% endfor %}
+
+<p>"minimum_grade_credit": {{course_grading.minimum_grade_credit}}</p>
+<p>"grade_cutoffs": {{course_grading.grade_cutoffs}}</p>
+<p>"grace_period": {{course_grading.grace_period}}</p>
+
 {% endblock body %}
