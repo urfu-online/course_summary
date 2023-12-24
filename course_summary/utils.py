@@ -1,3 +1,14 @@
+from datetime import datetime, timezone
+
+from enum import Enum
+from typing import List, Tuple
+
+import attr
+from lms.djangoapps.courseware.courses import (
+    get_course_overview_with_access,
+    get_course_with_access,
+)
+from opaque_keys import InvalidKeyError, OpaqueKey
 from opaque_keys.edx.keys import CourseKey
 from openedx.core.djangoapps.content.learning_sequences.api import get_course_outline
 from openedx.core.djangoapps.content.learning_sequences.data import (
@@ -7,25 +18,19 @@ from openedx.core.djangoapps.content.learning_sequences.data import (
     CourseSectionData,
     CourseVisibility,
     ExamData,
-    VisibilityData
+    VisibilityData,
 )
-from datetime import timezone, datetime
-from typing import List, Tuple
-from xmodule.modulestore import ModuleStoreEnum  # lint-amnesty, pylint: disable=wrong-import-order
-from xmodule.modulestore.django import modulestore  # lint-amnesty, pylint: disable=wrong-import-order
-from opaque_keys import OpaqueKey
+from xmodule.modulestore import (  # lint-amnesty, pylint: disable=wrong-import-order
+    ModuleStoreEnum,
+)
+from xmodule.modulestore.django import (  # lint-amnesty, pylint: disable=wrong-import-order
+    modulestore,
+)
 
-from enum import Enum
-from opaque_keys import InvalidKeyError
-import attr
+# def get_course()
 
 
-def get_course_outline_data(course_id):
-    try:
-        course_key = CourseKey.from_string(course_id)
-    except InvalidKeyError:
-        raise ValueError("Could not parse course_id {}".format(course_id))
-
+def get_course_outline_data(course_key):
     try:
         outline_data = get_course_outline(course_key)
     except (ValueError, CourseOutlineData.DoesNotExist):

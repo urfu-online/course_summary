@@ -1,12 +1,367 @@
-{% extends "main_django.html" %}
+{% extends "wiki/base.html" %}
 {% load i18n static %}
 {% load django_markup %}
+{% load summary_tags %}
 {% block title %}
-    {% trans "Signed Out" as tmsg %}{{ tmsg | force_escape }} | {{ block.super }}
+    Course summary | {{ block.super }}
 {% endblock title %}
-{% block body %}
-    <code><pre>{{course_outline_data_dict}}</pre></code>
-    {% for grader in course_grading_data.graders %}
+{% block wiki_contents %}
+    <div class="main-article">
+        <section class="container course_overview mb-5">
+            <h1>
+                Course overview
+            </h1>
+            <p>
+                <strong>id:</strong> {{ course_overview.id }}
+            </p>
+            <p>
+                <strong>org:</strong> {{ course_overview.org }}
+            </p>
+            <p>
+                <strong>display_name:</strong> {{ course_overview.display_name }}
+            </p>
+            <p>
+                <strong>display_number_with_default:</strong> {{ course_overview.display_number_with_default }}
+            </p>
+            <p>
+                <strong>display_org_with_default:</strong> {{ course_overview.display_org_with_default }}
+            </p>
+            <p>
+                <strong>start:</strong> {{ course_overview.start }}
+            </p>
+            <p>
+                <strong>end:</strong> {{ course_overview.end }}
+            </p>
+            <p>
+                <strong>start_date:</strong> {{ course_overview.start_date }}
+            </p>
+            <p>
+                <strong>end_date:</strong> {{ course_overview.end_date }}
+            </p>
+            <p>
+                <strong>advertised_start:</strong> {{ course_overview.advertised_start }}
+            </p>
+            <p>
+                <strong>announcement:</strong> {{ course_overview.announcement }}
+            </p>
+            <p>
+                <strong>banner_image_url:</strong> {{ course_overview.banner_image_url }}
+            </p>
+            <p>
+                <strong>course_image_url:</strong> {{ course_overview.course_image_url }}
+            </p>
+            <p>
+                <strong>social_sharing_url:</strong> {{ course_overview.social_sharing_url }}
+            </p>
+            <p>
+                <strong>end_of_course_survey_url:</strong> {{ course_overview.end_of_course_survey_url }}
+            </p>
+            <p>
+                <strong>certificates_display_behavior:</strong> {{ course_overview.certificates_display_behavior }}
+            </p>
+            <p>
+                <strong>certificates_show_before_end:</strong> {{ course_overview.certificates_show_before_end }}
+            </p>
+            <p>
+                <strong>cert_html_view_enabled:</strong> {{ course_overview.cert_html_view_enabled }}
+            </p>
+            <p>
+                <strong>has_any_active_web_certificate:</strong> {{ course_overview.has_any_active_web_certificate }}
+            </p>
+            <p>
+                <strong>cert_name_short:</strong> {{ course_overview.cert_name_short }}
+            </p>
+            <p>
+                <strong>cert_name_long:</strong> {{ course_overview.cert_name_long }}
+            </p>
+            <p>
+                <strong>certificate_available_date:</strong> {{ course_overview.certificate_available_date }}
+            </p>
+            <p>
+                <strong>lowest_passing_grade:</strong> {{ course_overview.lowest_passing_grade }}
+            </p>
+            <p>
+                <strong>days_early_for_beta:</strong> {{ course_overview.days_early_for_beta }}
+            </p>
+            <p>
+                <strong>mobile_available:</strong> {{ course_overview.mobile_available }}
+            </p>
+            <p>
+                <strong>visible_to_staff_only:</strong> {{ course_overview.visible_to_staff_only }}
+            </p>
+            <p>
+                <strong>enrollment_start:</strong> {{ course_overview.enrollment_start }}
+            </p>
+            <p>
+                <strong>llment_end:</strong> {{ course_overview.llment_end }}
+            </p>
+            <p>
+                <strong>enrollment_domain:</strong> {{ course_overview.enrollment_domain }}
+            </p>
+            <p>
+                <strong>invitation_only:</strong> {{ course_overview.invitation_only }}
+            </p>
+            <p>
+                <strong>max_student_enrollments_allowed:</strong> {{ course_overview.max_student_enrollments_allowed }}
+            </p>
+            <p>
+                <strong>catalog_visibility:</strong> {{ course_overview.catalog_visibility }}
+            </p>
+            <p>
+                <strong>short_description:</strong> {{ course_overview.short_description }}
+            </p>
+            <p>
+                <strong>course_video_url:</strong> {{ course_overview.course_video_url }}
+            </p>
+            <p>
+                <strong>effort:</strong> {{ course_overview.effort }}
+            </p>
+            <p>
+                <strong>self_paced:</strong> {{ course_overview.self_paced }}
+            </p>
+            <p>
+                <strong>marketing_url:</strong> {{ course_overview.marketing_url }}
+            </p>
+            <p>
+                <strong>eligible_for_financial_aid:</strong> {{ course_overview.eligible_for_financial_aid }}
+            </p>
+            <p>
+                <strong>has_highlights:</strong> {{ course_overview.has_highlights }}
+            </p>
+            <p>
+                <strong>enable_proctored_exams:</strong> {{ course_overview.enable_proctored_exams }}
+            </p>
+            <p>
+                <strong>proctoring_provider:</strong> {{ course_overview.proctoring_provider }}
+            </p>
+            <p>
+                <strong>proctoring_escalation_email:</strong> {{ course_overview.proctoring_escalation_email }}
+            </p>
+            <p>
+                <strong>w_proctoring_opt_out:</strong> {{ course_overview.w_proctoring_opt_out }}
+            </p>
+            <p>
+                <strong>entrance_exam_enabled:</strong> {{ course_overview.entrance_exam_enabled }}
+            </p>
+            <p>
+                <strong>entrance_exam_id:</strong> {{ course_overview.entrance_exam_id }}
+            </p>
+            <p>
+                <strong>entrance_exam_minimum_score_pct:</strong> {{ course_overview.entrance_exam_minimum_score_pct }}
+            </p>
+            <p>
+                <strong>force_on_flexible_peer_openassessments:</strong> {{ course_overview.force_on_flexible_peer_openassessments }}
+            </p>
+            <p>
+                <strong>external_id:</strong> {{ course_overview.external_id }}
+            </p>
+            <p>
+                <strong>language:</strong> {{ course_overview.language }}
+            </p>
+        </section>
+        <section class="container course_details mb-5">
+            <h1>
+                Course details
+            </h1>
+            <p>
+                <strong>org:</strong> {{ course_details.org }}
+            </p>
+            <p>
+                <strong>course_id:</strong> {{ course_details.course_id }}
+            </p>
+            <p>
+                <strong>run:</strong> {{ course_details.run }}
+            </p>
+            <p>
+                <strong>language:</strong> {{ course_details.language }}
+            </p>
+            <p>
+                <strong>start_date:</strong> {{ course_details.start_date }}
+            </p>
+            <p>
+                <strong>end_date:</strong> {{ course_details.end_date }}
+            </p>
+            <p>
+                <strong>enrollment_start:</strong> {{ course_details.enrollment_start }}
+            </p>
+            <p>
+                <strong>enrollment_end:</strong> {{ course_details.enrollment_end }}
+            </p>
+            <p>
+                <strong>certificate_available_date:</strong> {{ course_details.certificate_available_date }}
+            </p>
+            <p>
+                <strong>certificates_display_behavior:</strong> {{ course_details.certificates_display_behavior }}
+            </p>
+            <p>
+                <strong>syllabus:</strong> {{ course_details.syllabus }}
+            </p>
+            <p>
+                <strong>title:</strong> {{ course_details.title }}
+            </p>
+            <p>
+                <strong>subtitle:</strong> {{ course_details.subtitle }}
+            </p>
+            <p>
+                <strong>duration:</strong> {{ course_details.duration }}
+            </p>
+            <p>
+                <strong>description:</strong> {{ course_details.description }}
+            </p>
+            <p>
+                <strong>short_description:</strong> {{ course_details.short_description }}
+            </p>
+            <p>
+                <strong>overview:</strong>
+            </p>
+            <pre><code>{{ course_details.overview }}</code></pre>
+            <p>
+                <strong>about_sidebar_html:</strong> {{ course_details.about_sidebar_html }}
+            </p>
+            <p>
+                <strong>intro_video:</strong> {{ course_details.intro_video }}
+            </p>
+            <p>
+                <strong>effort:</strong> {{ course_details.effort }}
+            </p>
+            <p>
+                <strong>license:</strong> {{ course_details.license }}
+            </p>
+            <p>
+                <strong>course_image_name:</strong> {{ course_details.course_image_name }}
+            </p>
+            <p>
+                <strong>course_image_asset_path:</strong> {{ course_details.course_image_asset_path }}
+            </p>
+            <p>
+                <strong>banner_image_name:</strong> {{ course_details.banner_image_name }}
+            </p>
+            <p>
+                <strong>banner_image_asset_path:</strong> {{ course_details.banner_image_asset_path }}
+            </p>
+            <p>
+                <strong>video_thumbnail_image_name:</strong> {{ course_details.video_thumbnail_image_name }}
+            </p>
+            <p>
+                <strong>video_thumbnail_image_asset_path:</strong> {{ course_details.video_thumbnail_image_asset_path }}
+            </p>
+            <p>
+                <strong>pre_requisite_courses:</strong> {{ course_details.pre_requisite_courses }}
+            </p>
+            <p>
+                <strong>entrance_exam_enabled:</strong> {{ course_details.entrance_exam_enabled }}
+            </p>
+            <p>
+                <strong>entrance_exam_id:</strong> {{ course_details.entrance_exam_id }}
+            </p>
+            <p>
+                <strong>entrance_exam_minimum_score_pct:</strong> {{ course_details.entrance_exam_minimum_score_pct }}
+            </p>
+            <p>
+                <strong>self_paced:</strong> {{ course_details.self_paced }}
+            </p>
+            <p>
+                <strong>learning_info:</strong> {{ course_details.learning_info }}
+            </p>
+            <p>
+                <strong>instructor_info:</strong> {{ course_details.instructor_info }}
+            </p>
+        </section>
+        <section class="container course_outline mb-5">
+            <h1>
+                Course outline
+            </h1>
+            <p>
+                <strong>course_key:</strong> {{ course_outline_data.course_key }}
+            </p>
+            <p>
+                <strong>title:</strong> {{ course_outline_data.title }}
+            </p>
+            <p>
+                <strong>published_at:</strong> {{ course_outline_data.published_at }}
+            </p>
+            <p>
+                <strong>published_version:</strong> {{ course_outline_data.published_version }}
+            </p>
+            <p>
+                <strong>days_early_for_beta:</strong> {{ course_outline_data.days_early_for_beta }}
+            </p>
+            <p>
+                <strong>self_paced:</strong> {{ course_outline_data.self_paced }}
+            </p>
+            <p>
+                <strong>course_visibility:</strong> {{ course_outline_data.course_visibility }}
+            </p>
+            <p>
+                <strong>entrance_exam_id:</strong> {{ course_outline_data.entrance_exam_id }}
+            </p>
+            <hr>
+            <ol class="d-block my-3">
+                {% for section in course_outline_data.sections %}
+                    <li class="d-block border-primary border mb-2 p-3">
+                        <div class="hd-1 mb-0">
+                            {% if section.visibility.visible_to_staff_only %}
+                                <i class="fa fa-lock" aria-hidden="true"></i>
+                            {% endif %}
+                            {{ section.title }}
+                            <code class="dwarf text-purchase">
+                                block_id: {{ section.usage_key.block_id }} <i class="vertical-divider mx-2"></i>usage_key: {{ section.usage_key }}
+                            </code>
+                        </div>
+                        <ol class="d-block">
+                            {% for sequence in section.sequences %}
+                                <li class="d-block mb-2">
+                                    <div class="hd-3 m-3">
+                                        {% if sequence.visibility.visible_to_staff_only %}
+                                            <i class="fa fa-lock" aria-hidden="true"></i>
+                                        {% endif %}
+                                        {{ sequence.title }}
+                                        <code class="dwarf text-purchase">
+                                            block_id: {{ sequence.usage_key.block_id }} <i class="vertical-divider mx-2"></i>usage_key: {{ sequence.usage_key }}
+                                        </code>
+                                    </div>
+                                    <ol>
+                                        {% for vertical in verticals|keyvalue:sequence.usage_key.block_id %}
+                                            <li class="d-block mb-2">
+                                                <div class="hd-4 m-3">
+                                                    {% if vertical.visible_to_staff_only %}
+                                                        <i class="fa fa-lock" aria-hidden="true"></i>
+                                                    {% endif %}
+                                                    {{ vertical.display_name }}
+                                                    <code class="dwarf text-purchase">
+                                                        block_id: {{ vertical.location.block_id }} <i class="vertical-divider mx-2"></i>usage_key: {{ vertical.location }}
+                                                    </code>
+                                                </div>
+                                                <ol>
+                                                    {% for block in blocks|keyvalue:vertical %}
+                                                        <li class="d-block mb-2">
+                                                            <div class="hd-5 m-3">
+                                                                {% if vertical.visible_to_staff_only %}
+                                                                    <i class="fa fa-lock" aria-hidden="true"></i>
+                                                                {% endif %}
+                                                                {{ block.display_name }}
+                                                                
+                                                                <code class="dwarf text-purchase">
+                                                                    block_id: {{ block.location.block_id }} <i class="vertical-divider mx-2"></i>usage_key: {{ block.location }} <br />>
+                                                                    {{ block }}
+                                                                </code>
+                                                            </div>
+                                                            <code><pre>{{ block.data|safe }}</pre></code>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ol>
+                                            </li>
+                                        {% endfor %}
+                                    </ol>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </li>
+                {% endfor %}
+            </ol>
+        </section>
+    </div>
+    {% for grader in course_grading.graders %}
         {% for key, value in grader.items %}
             <p>
                 <strong>{{ key }}:</strong>{{ value }}
@@ -14,16 +369,22 @@
         {% endfor %}
         <hr>
     {% endfor %}
-    <p>"minimum_grade_credit": {{ course_grading_data.minimum_grade_credit }}</p>
-    <p>"grade_cutoffs": {{ course_grading_data.grade_cutoffs }}</p>
-    <p>"grace_period": {{ course_grading_data.grace_period }}</p>
-    {% comment %} <h3>collected_block_structure</h3>
-{% for key, value in collected_block_structure.iteritems %}
- <p><strong>{{ key }}:</strong>{{ value }}</p>
-    {% endfor %} {% endcomment %}
-    <ol>
-        {% for section in sections.values %}<li>{{ section }}</li>{% endfor %}
-    </ol>
-    <h2>Course blocks</h2>
-    {% for course in course_blocks.values %}<p>{{ course }}</p>{% endfor %}
-{% endblock body %}
+    <p>
+        "minimum_grade_credit": {{ course_grading.minimum_grade_credit }}
+    </p>
+    <p>
+        "grade_cutoffs": {{ course_grading.grade_cutoffs }}
+    </p>
+    <p>
+        "grace_period": {{ course_grading.grace_period }}
+    </p>
+    {{ course_details }}
+    <style>
+    .dwarf {
+        font-size: .9rem;
+        font-weight: 300;
+        line-height: 1em;
+        display: block;
+    }
+    </style>
+{% endblock wiki_contents %}
